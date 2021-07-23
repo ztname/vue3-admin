@@ -1,0 +1,25 @@
+.main-login{
+    width:100vw;
+    height:100vh;
+    background-color: #282828;
+    .login{
+        width:285px;
+        margin:auto;
+        padding-top:300px;
+        color:white;
+        label{
+            color:white;
+            font-size:12px;
+            margin-bottom:12px;
+            display: block;
+        }
+        .ant-form-item-label{
+            display:block;
+            text-align: left;
+        }
+        .tips{
+            width:100%;
+            text-align: center;
+        }
+    }
+}
