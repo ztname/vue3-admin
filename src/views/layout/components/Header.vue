@@ -14,8 +14,7 @@
         <a-menu-divider />
         <a-menu-item key="1">
           <div>
-              <span class="chinese">中文</span>
-              <span>En</span>
+              <span v-for="item in lang" :key="item.value" @click="toggleLang(item)" :class="{currentLang:langCurrent === item.value}">{{item.label}}</span>
           </div>
         </a-menu-item>
         <a-menu-divider />
@@ -32,8 +31,42 @@
 </div>
 </template>
 <script>
+import { reactive,toRefs } from 'vue'
+      // 方1
+import i18n from '../../language'
+      // 方2
+import { useI18n } from 'vue-i18n'
 export default{
-
+  setup(props) {
+    const data = reactive({
+      // 语种
+      lang:[{
+        label:'中文',value:'CN'
+      },{
+        label:'EN',value:'EN'
+      },{
+        label:'日本',value:'JP'
+      }],
+      langCurrent:'CN'
+    })
+      // 方2
+    const { locale } = useI18n({useScope:'global'})
+    // 切换语言方法
+    const toggleLang = (item)=>{
+      // 更改默认语种
+      // 方1
+      // i18n.global.locale = item.value
+      // 方2
+      locale.value = item.value
+      // 增加类名，控制选中状态
+      data.langCurrent = item.value
+    }
+    const dataRef = toRefs(data)
+    return{
+      ...dataRef,
+      toggleLang
+    }
+  }
 }
 </script>
 <style lang="scss">
@@ -57,8 +90,12 @@ export default{
     padding: 20px;
     font-size:16px;
     font-family: '黑体';
-    .chinese{
+    span{
         margin-right:20px;
+        color:#333;
+    }
+    .currentLang{
+      color:red
     }
 }
 </style>
